@@ -9,6 +9,19 @@
 //////////
 // EXEMPLE
 
+export const name = "square";
+
+export function draw(ctx, length, x, y, color) {
+	ctx.fillStyle = color;
+	ctx.fillRect(x, y, length, length);
+
+	return {
+		length: length,
+		x: x,
+		y: y,
+		color: color,
+	};
+}
 
 //////////
 // EXEMPLE
@@ -17,3 +30,10 @@
 // une seule instruction située à la fin du fichier : les valeurs sont séparées
 // par des virgules et la liste est délimitée entre accolades.
 
+export { today, displayToday };
+
+const today = new Date();
+
+function displayToday(today) {
+	console.log(today);
+}
