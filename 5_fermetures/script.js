@@ -14,10 +14,35 @@
 //////////
 // EXEMPLE
 
+const portee = "portée globale";
+
+function verifierPortee() {
+	const portee = "porté locale";
+
+	function f() {
+		return portee;
+	}
+
+	return f(); // Retourne le résultat de la fonction.
+}
+
+verifierPortee(); // => "porté locale"
 
 // Qu'arrive-t-il si nous renvoyons plutôt l'object fonction `f`, et que nous
 // appelons celle-ci à l'*extérieur* de la fonction `verifierPorteeFermeture` ?
 
+function verifierPorteeFermeture() {
+	const portee = "portée locale";
+
+	function f() {
+		return portee;
+	}
+
+	return f; // Retourne l'object fonction, non son résultat.
+}
+
+const s = verifierPorteeFermeture();
+s(); // => "porté locale"
 
 ////////////////////////////////////////////////////////////////////////////////
 // LES FERMETURES EN PRATIQUE
@@ -37,6 +62,15 @@
 // l'état interne du conteur privé (c'est-à-dire inaccessible au code
 // extérieur) :
 
+function conteur() {
+	let n = 0; // privée
+
+	return function () {
+		return n++;
+	};
+}
+
+let c = conteur(); // => 0, 1, 2, etc.
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
