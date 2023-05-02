@@ -96,16 +96,16 @@ const juliette = new Enseignant("Juliette", "français");
 
 class Personne {
 	// propriété (facultatif)
-	nom;
+	#nom;
 
 	// constructeur
 	constructor(nom) {
-		this.nom = nom;
+		this.#nom = nom;
 	}
 
 	// méthode
 	sePresenter() {
-		return `Je m'appelle ${this.nom}.`;
+		return `Je m'appelle ${this.#nom}.`;
 	}
 }
 
