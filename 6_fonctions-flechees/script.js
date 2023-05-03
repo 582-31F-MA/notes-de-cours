@@ -14,6 +14,9 @@
 // séparés par des virgules entre parenthèses, suivie de la flèche `=>`, suivie
 // du corps de la fonction entre accolades :
 
+(x, y) => {
+	return x + y;
+};
 
 ///////////////////
 // SYNTAXE COMPACTE
@@ -22,6 +25,7 @@
 // `return` et les accolades peuvent être omis. On écrit alors seulement
 // l'expression dont on veut retourner la valeur :
 
+(x, y) => x + y;
 
 /////////////////////////////////
 // SYNTAXE COMPACTE (ENCORE PLUS)
@@ -29,10 +33,12 @@
 // Si la fonction a seulement un paramètre, les parenthèses peuvent être
 // omises :
 
+(x) => x * x;
 
 // Notez toutefois qu'une fonction fléchée sans paramètres doit toujours être
 // écrite avec les parenthèses.
 
+() => 2 + 2;
 
 ////////////////////////////////////////////////////////////////////////////////
 // MOT CLÉ `this`
@@ -45,6 +51,22 @@
 // l'environnement dans lequel elles sont définies plutôt que de définir leur
 // propre contexte d'invocation comme le font les autre types de fonctions.
 
+const o = {
+	m: function () {
+		this === o; // => true : `this` égale l'object `o`
+
+		// Dans la fonction imbriquée ci-dessous, `this` n'est pas égal à `o`.
+		// Ceci est largement considéré comme une faille dans le langage
+		// JavaScript.
+		function f() {
+			this === o; // => false : `this` est `undefined` ou `Window`
+		}
+
+		() => {
+			this === o; // => true :
+		};
+	},
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
