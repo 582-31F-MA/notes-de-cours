@@ -12,11 +12,19 @@
 //////////
 // EXEMPLE
 
+const miriam = "Miriam";
+const salut = `Je m'appelle ${miriam} !`; // => "Bonjour, je m'appelle Miriam !"
 
 // Quand bien même on appellerait une fonction séparée, le programme serait
 // toujours synchrone, car l'instruction qui l'appelle doit attendre que la
 // fonction ait renvoyé sa valeur de retour avant de pouvoir finir.
 
+function creerSalutation(nom) {
+	return `Bonjour, je m'appelle ${nom} !`;
+}
+
+const david = "David";
+const salut2 = creerSalutation(david); // => Bonjour, je m'appelle David !
 
 ////////////////////////////////////////////////////////////////////////////////
 // PROBLÈME DE LA PROGRAMMATION SYNCHRONE
@@ -110,15 +118,20 @@ document.querySelector("#recharger").addEventListener("click", () => {
 // D'abord, on appelle l'API `fetch()`, laquelle envoie une requête HTTP à un
 // serveur, et on affecte la valeur de retour à la variable `fetchPromise`.
 
+const fetchProduct = fetch("https://fakestoreapi.com/products/1");
 
 // On affiche la variable `fetchPromise` dans la console. Une promesse peut être
 // dans 3 états : pending, fulfilled, rejected.
 
+console.log("1", fetchProduct); // => Promise { <state>: "pending" }
 
 // Ensuite, on passe une fonction de rappel à la méthode `then()` de la
 // promesse. Si l'opération réussie, la promesse appellera la fonction en lui
 // passant un objet `Response` qui contient la réponse du serveur.
 
+fetchProduct.then((response) => {
+	console.log("2", `Réponse reçue : ${response.status}`); // => Réponse reçue : 200
+});
 
 // Enfin, on affiche un message dans la console indiquant que la requête a été
 // lancée. On notera que le message sera affiché avant d'avoir reçu une réponse.
@@ -126,6 +139,7 @@ document.querySelector("#recharger").addEventListener("click", () => {
 // retour alors que la requête est toujours en cours, ce qui permet à notre
 // programme de rester réactif.
 
+console.log("3", "Requête initiée…");
 
 ///////////////////
 // EXEMPLE `json()`
@@ -137,6 +151,19 @@ document.querySelector("#recharger").addEventListener("click", () => {
 // méthode `json()` de l'objet Response. Il s'avère que `json()` est également
 // asynchrone ; il faut donc appeler deux fonctions asynchrones à la suite.
 
+fetch("https://fakestoreapi.com/products/2")
+	.then((response) => {
+		// Vérifie que le serveur a accepté notre requête.
+		if (!response.ok) {
+			throw new Error(`Erreur HTTP : ${response.status}`);
+		}
+		// Retourne la promesse renvoyée par la méthode `json()`.
+		return response.json();
+	})
+	// Appel `then()` sur la promesse retournée plus haut.
+	.then((json) => {
+		console.log("Produit 2", json);
+	});
 
 ////////////////////////////////////////////////////////////////////////////////
 // INTERCEPTER LES ERREURS
@@ -158,6 +185,22 @@ document.querySelector("#recharger").addEventListener("click", () => {
 //
 // Entrez un mauvais URL pour voir l'erreur s'afficher dans la console.
 
+fetch("https://fakestoreapi.com/products/3")
+	.then((response) => {
+		// Vérifie que le serveur a accepté notre requête.
+		if (!response.ok) {
+			throw new Error(`Erreur HTTP : ${response.status}`);
+		}
+		// Retourne la promesse renvoyée par la méthode `json()`.
+		return response.json();
+	})
+	// Appel `then()` sur la promesse retournée plus haut.
+	.then((json) => {
+		console.log("Produit 3", json);
+	})
+	.catch((error) => {
+		console.error(`Impossible de récupérer le produit 3 : ${error}`);
+	});
 
 ////////////////////////////////////////////////////////////////////////////////
 // `async` ET `await`
@@ -169,6 +212,9 @@ document.querySelector("#recharger").addEventListener("click", () => {
 //////////
 // EXEMPLE
 
+async function maFonctionAsynchrone() {
+	return "Je suis une fonction asynchrone.";
+}
 
 // Dans une fonction asynchrone, on peut utiliser le mot-clé `await` avant un
 // appel à une fonction renvoyant une promesse. De cette façon, le code patiente
@@ -180,14 +226,38 @@ document.querySelector("#recharger").addEventListener("click", () => {
 // ressemble à du code synchrone. On pourrait par exemple réécrire notre exemple
 // avec `fetch()` comme ceci :
 
+async function fetchProduct4() {
+	const response = await fetch("https://fakestoreapi.com/products/4");
+	const json = await response.json();
+
+	console.log(json);
+}
 
 // On peut même utiliser un bloc `try…catch` pour la gestion d'erreurs, de la
 // même façon qu'on peut le faire lorsqu'on utilise du code synchrone.
 
+async function fetchProduct5() {
+	try {
+		const response = await fetch("https://fakestoreapi.com/products/5");
+		const json = await response.json();
+		console.log(json);
+	} catch (error) {
+		console.error(`Impossible de récupérer le produit 5 : ${error}`);
+	}
+}
 
 // Attention, les functions asynchrones renvoient toujours une promesse. On ne
 // peut donc pas assigner directement leur valeur de retour.
 
+async function fetchProduct6() {
+	const response = await fetch("https://fakestoreapi.com/products/6");
+	const json = await response.json();
+
+	return json;
+}
+
+const product6 = fetchProduct6(); // => Promise
+product6.then((data) => console.log("Produit 6", data)); // => {id: 6, ...}
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
