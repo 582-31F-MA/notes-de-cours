@@ -277,6 +277,20 @@ const constance = new EleveV3("Constance", 1);
 //////////
 // EXEMPLE
 
+class App {
+	static staticProperty = "someValue";
+
+	static async fetchData() {
+		const response = await fetch("...");
+		const data = await response.json();
+
+		return data;
+	}
+}
+
+App.fetchData().then((data) => {
+	// ...
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES

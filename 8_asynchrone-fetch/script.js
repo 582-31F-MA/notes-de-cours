@@ -234,6 +234,25 @@ fetch("https://fakestoreapi.com/products/3")
 // réussissent toutes les trois, on affiche le code de statut de chaque. Si
 // l'une d'elles échoue, on affiche l'erreur dans la console.
 
+const fetchPromise1 = fetch(
+	"https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
+);
+const fetchPromise2 = fetch(
+	"https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found"
+);
+const fetchPromise3 = fetch(
+	"https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json"
+);
+
+Promise.all([fetchPromise1, fetchPromise2, fetchPromise3])
+	.then((reponses) => {
+		for (const reponse of reponses) {
+			console.log(`${reponse.url} : ${reponse.status}`);
+		}
+	})
+	.catch((error) => {
+		console.error(`Erreur de récupération : ${error}`);
+	});
 
 // Il arrive aussi qu'on ait plusieurs promesses et que la réussite d'une seule
 // suffise, quelle que soit la promesse qui réussit. Dans ce cas, on pourra
@@ -244,6 +263,23 @@ fetch("https://fakestoreapi.com/products/3")
 /////////////////////////////
 // EXEMPLE de `Promise.any()`
 
+const fetchPromise4 = fetch(
+	"https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/products.json"
+);
+const fetchPromise5 = fetch(
+	"https://mdn.github.io/learning-area/javascript/apis/fetching-data/can-store/not-found"
+);
+const fetchPromise6 = fetch(
+	"https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json"
+);
+
+Promise.any([fetchPromise4, fetchPromise5, fetchPromise6])
+	.then((reponse) => {
+		console.log(`${reponse.url}: ${reponse.status}`);
+	})
+	.catch((error) => {
+		console.error(`Erreur de récupération : ${error}`);
+	});
 
 ////////////////////////////////////////////////////////////////////////////////
 // `async` ET `await`
