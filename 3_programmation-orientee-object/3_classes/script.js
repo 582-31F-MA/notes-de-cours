@@ -267,6 +267,18 @@ class EleveV3 extends Personne {
 const constance = new EleveV3("Constance", 1);
 
 ////////////////////////////////////////////////////////////////////////////////
+// MÉTHODE ET PROPRIÉTÉ STATIQUES
+//
+// Le mot-clé static permet de définir une méthode ou une propriété statique
+// d'une classe. Les méthodes statiques ne sont pas disponibles sur les
+// instances d'une classe mais sont appelées sur la classe elle-même. Les
+// méthodes statiques sont généralement des fonctions utilitaires.
+//
+//////////
+// EXEMPLE
+
+
+////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
 //
 // - https://developer.mozilla.org/fr/docs/Learn/JavaScript/Objects/
@@ -278,3 +290,5 @@ const constance = new EleveV3("Constance", 1);
 // - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/
 //   Using_classes
 // - https://getkirby.com/docs/cookbook/templating/understanding-oop
+// - https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes/
+//   static

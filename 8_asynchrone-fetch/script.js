@@ -203,6 +203,49 @@ fetch("https://fakestoreapi.com/products/3")
 	});
 
 ////////////////////////////////////////////////////////////////////////////////
+// COMBINER PLUSIEURS PROMESSES
+//
+// Une chaîne de promesse est utile lorsque notre opération se compose de
+// plusieurs fonctions asynchrones et que chacune de ces fonctions doit démarrer
+// à la suite de l'autre. Il existe toutefois d'autres façons de combiner les
+// appels de fonctions asynchrones.
+//
+// Parfois, on a besoin que toutes les promesses soient tenues, mais leur
+// exécution ne dépend pas l'une de l'autre. Dans une telle situation, il est
+// plus efficace de lancer toutes les promesses en même temps puis de recevoir
+// une notification lorsqu'elles ont toutes été tenues.
+//
+// La méthode `Promise.all()` est l'outil adéquat pour ça. Elle prend comme
+// argument un tableau de promesses et renvoie une seule promesse.
+//
+// La promesse renvoyée par `Promise.all()` est :
+//
+// - Tenue lorsque toutes les promesses du tableau ont été tenues. Dans ce cas,
+//   le gestionnaire `then()` est appelé avec un tableau contenant toutes les
+//   réponses, dans le même ordre que le tableau des promesses passé à `all()`.
+// - Rompue si au moins une des promesses du tableau a été rompue. Dans ce cas,
+//   le gestionnaire `catch()` est appelé avec l'erreur levée par la promesse du
+//   tableau qui a été rompue.
+//
+/////////////////////////////
+// EXEMPLE de `Promise.all()`
+//
+// Ici, on lance trois requêtes `fetch()` vers trois URL différentes. Si elles
+// réussissent toutes les trois, on affiche le code de statut de chaque. Si
+// l'une d'elles échoue, on affiche l'erreur dans la console.
+
+
+// Il arrive aussi qu'on ait plusieurs promesses et que la réussite d'une seule
+// suffise, quelle que soit la promesse qui réussit. Dans ce cas, on pourra
+// utiliser `Promise.any()`. Elle fonctionne comme `Promise.all()`, mais elle
+// est tenue dès qu'une des promesses du tableau a été tenue et rompue
+// uniquement si toutes les promesses du tableau sont rompues
+//
+/////////////////////////////
+// EXEMPLE de `Promise.any()`
+
+
+////////////////////////////////////////////////////////////////////////////////
 // `async` ET `await`
 //
 // Le mot-clé async fournit une façon plus simple de travailler avec du code
