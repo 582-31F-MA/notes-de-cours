@@ -23,6 +23,9 @@
 // Le constructeur prend un paramètre `url`, et un paramètre optionnel `base`
 // utilisé si le paramètre `url` est une URL relative.
 
+const url1 = new URL("https://developer.mozilla.org/fr/docs/Web/API/URL");
+const url2 = new URL("/fr/docs/Web/API/URL", "https://developer.mozilla.org");
+const url3 = new URL(window.location);
 
 ////////////////////////////////////////////////////////////////////////////////
 // INTERFACE `URLSearchParams` /////////////////////////////////////////////////
@@ -34,6 +37,7 @@
 //////////
 // EXEMPLE
 
+const params = new URLSearchParams();
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `set()`
@@ -46,6 +50,9 @@
 //////////
 // EXEMPLE
 
+params.set("name", "value");
+params.set("search", "hayao");
+params.set("view", "list");
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `append()`
@@ -58,6 +65,8 @@
 //////////
 // EXEMPLE
 
+params.append("filter", "2021");
+params.append("filter", "1986");
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `get()`
@@ -68,6 +77,14 @@
 //////////
 // EXEMPLE
 
+const viewParam = params.get("view");
+const searchParam = params.get("search");
+
+function logAllParams() {
+	for (const [key, value] of params) {
+		console.log(key, value);
+	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `getAll()`
@@ -78,6 +95,7 @@
 //////////
 // EXEMPLE
 
+const filterParam = params.getAll("filter");
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `delete()`
@@ -88,6 +106,7 @@
 //////////
 // EXEMPLE
 
+params.delete("name");
 
 ////////////////////////////////////////////////////////////////////////////////
 // MANIPULER L'HISTORIQUE DU NAVIGATEUR ////////////////////////////////////////
@@ -116,6 +135,9 @@
 // Vous remarquerez que cela provoque l'apparition de la nouvelle URL dans la
 // barre de navigation, mais pas le chargement effectif de la nouvelle page.
 
+function updateURL(url) {
+	history.pushState({ data: "" }, "Nouvel état", url);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // MÉTHODE `history.replaceState()`
@@ -128,6 +150,9 @@
 //////////
 // EXEMPLE
 
+function replaceURL(url) {
+	history.pushState({ data: "" }, "Nouvel état", url);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
