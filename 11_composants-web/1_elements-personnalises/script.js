@@ -23,6 +23,16 @@
 //////////
 // EXEMPLE
 
+class myFirstCustomElement extends HTMLElement {
+	constructor() {
+		// Toujours appeler `super()` dans le constructeur.
+		super();
+
+		this.innerHTML = `
+			<h2>Ceci est mon premier élément personnalisé !</h2>
+		`;
+	}
+}
 
 // Il ne faut pas oublier d'enregistrer notre élément personnalisé dans le
 // CustomElementRegistry à l'aide de la méthode define() mentionnée
@@ -48,7 +58,34 @@ customElements.define("my-first-custom-element", myFirstCustomElement);
 //////////
 // EXEMPLE
 
+customElements.define(
+	"my-second-ce",
+	class mySecondCE extends HTMLElement {
+		constructor() {
+			super();
 
+			console.log("Notre élément est instancié.");
+		}
+
+		connectedCallback() {
+			console.log("Notre élément est connecté au DOM.");
+		}
+
+		disconnectedCallback() {
+			console.log("Notre élément est déconnecté du DOM.");
+		}
+	}
+);
+
+const customEl = document.createElement("my-second-ce");
+// => "Notre élément est instancié."
+
+const body = document.querySelector("body");
+body.append(customEl);
+// => "Notre élément est déconnecté du DOM."
+
+customEl.remove();
+// => "Notre élément est déconnecté du DOM."
 
 //////////
 // EXEMPLE
@@ -57,6 +94,40 @@ customElements.define("my-first-custom-element", myFirstCustomElement);
 // appelée automatiquement lorsque l'un des attributs de l'élément personnalisé
 // sera ajouté, supprimé ou modifié.
 
+class myThirdCE extends HTMLElement {
+	constructor() {
+		super();
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+
+	// Pour que le rappel fonction, il faut d'abord enregistrer les attributs
+	// que nous vous observer. Pour ce faire, on utilise l'accesseur statique
+	// `observedAttributes()`, lequel doit retourner les attributs à observer.
+	static get observedAttributes() {
+		return ["course"];
+	}
+
+	attributeChangedCallback(name, oldValue, newValue) {
+		this.course = newValue;
+		this.render();
+
+		console.log(name, oldValue, newValue);
+	}
+
+	// Il est courant de définir le balisage de l'élément dans une méthode
+	// `render()`. De cette façon, nous pouvons facilement mettre à jour son
+	// affichage lorsque son état change.
+	render() {
+		this.innerHTML = `
+			<p>Mon cours préféré est ${this.course}.</p>
+		`;
+	}
+}
+
+customElements.define("my-third-ce", myThirdCE);
 
 ////////////////////////////////////////////////////////////////////////////////
 // ATTRIBUTS ET PROPRIÉTÉS
@@ -76,6 +147,31 @@ customElements.define("my-first-custom-element", myFirstCustomElement);
 //////////
 // EXEMPLE
 
+customElements.define(
+	"movie-catalogue",
+	class MovieCatalogue extends HTMLElement {
+		movies = {
+			// ...
+		};
+
+		constructor() {
+			super();
+		}
+
+		set movies(movies) {
+			this.movies = movies;
+			this.render();
+		}
+
+		connectedCallback() {
+			render();
+		}
+
+		render() {
+			// ...
+		}
+	}
+);
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES
