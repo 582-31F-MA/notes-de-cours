@@ -17,6 +17,11 @@
 //
 // Voir index.html
 
+const template = document.querySelector("#heading-template");
+const templateContent = template.content;
+const templateContentClone = templateContent.cloneNode(true);
+
+document.body.prepend(templateContentClone);
 
 ////////////////////////////////////////////////////////////////////////////////
 // L'ÉLÉMENT <slot> ////////////////////////////////////////////////////////////
@@ -32,6 +37,21 @@
 //
 // Voir index.html
 
+customElements.define(
+	"grocery-item",
+	class GroceryItem extends HTMLElement {
+		constructor() {
+			super();
+
+			const template = document.querySelector("#grocery-item-template");
+			const templateContent = template.content;
+			const templateContentClone = templateContent.cloneNode(true);
+
+			this.attachShadow({ mode: "open" });
+			this.shadowRoot.append(templateContentClone);
+		}
+	}
+);
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES

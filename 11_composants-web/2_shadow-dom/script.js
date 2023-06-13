@@ -29,6 +29,22 @@
 //////////
 // EXEMPLE
 
+customElements.define(
+	"my-component",
+	class myComponent extends HTMLElement {
+		constructor() {
+			super();
+
+			this.attachShadow({ mode: "open" });
+		}
+
+		connectedCallback() {
+			this.shadowRoot.innerHTML = `
+				<h1>Boooo ! Je suis un fantôme.</h1>
+			`;
+		}
+	}
+);
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESSOURCES

@@ -7,5 +7,34 @@
 		<title>L'élément template</title>
 	</head>
 	<body>
+		<!-- Ceci restera invisible sur la page tant qu'aucune référence n'y
+		sera faite dans le code JavaScript puis ajouté au DOM. -->
+		<template id="heading-template">
+			<h1>Liste de commissions</h1>
+		</template>
+
+		<template id="grocery-item-template">
+			<!-- Puisque le contenu du template est attaché au shadow DOM de
+			l'élément personnalisé <grocery-item>, ce style n'affectera pas les
+			éléments extérieurs. -->
+			<style>
+				label {
+					display: block;
+				}
+
+				label:has(input:checked) {
+					color: gray;
+					text-decoration: line-through;
+				}
+			</style>
+
+			<label>
+				<input type="checkbox" />
+				<slot name="item">Texte par défaut</slot>
+			</label>
+		</template>
+
+		<grocery-item><span slot="item">Oignons</span></grocery-item>
+		<grocery-item><span slot="item">Champignons</span></grocery-item>
 	</body>
 </html>

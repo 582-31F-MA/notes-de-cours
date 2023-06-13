@@ -6,7 +6,17 @@
 		<script src="script.js" defer></script>
 		<title>Le shadow DOM</title>
 
+		<style>
+			h1 {
+				color: red; /* Ne style l'intérieur de notre composant */
+			}
+		</style>
+
+		<script>
+			const h1 = document.querySelector("h1"); // => null
+		</script>
 	</head>
 	<body>
+		<my-component></my-component>
 	</body>
 </html>
